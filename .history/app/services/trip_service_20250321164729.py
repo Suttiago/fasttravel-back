@@ -30,10 +30,7 @@ def pegar_hoteis():
         hotel_list = []
         for hotel in hotels:
             hotel_info ={
-            "name": hotel.get("name"),
-            "description":hotel.get("description"),
-            "link":hotel.get("link")}
-            
+            "name": hotel.get("name")}
         hotel_list.append(hotel_info)
     except requests.exceptions.RequestException as e:
         print(f"Erro ao fazer a requisição: {e}") 
