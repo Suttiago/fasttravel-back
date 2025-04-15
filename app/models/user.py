@@ -1,5 +1,5 @@
  
-class Usuario():
+class Usuario:
     def __init__(self, nome,cpf,renda_mensal,data_nascimento,trabalho):
         self.nome = nome
         self.cpf = cpf
