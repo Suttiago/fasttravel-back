@@ -46,3 +46,5 @@ Thumbs.db
 
 # Database folder
 database/
+
+app/views/front_end/node_modules
