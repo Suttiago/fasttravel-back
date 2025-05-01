@@ -13,8 +13,8 @@ def pegar_hoteis():
     params = {
     "engine": "google_hotels",  
     "q":"mexico",
-    "check_in_date": "2025-04-12",
-    "check_out_date": "2025-04-13",
+    "check_in_date": "2025-04-29",
+    "check_out_date": "2025-05-02",
     "api_key": hotel_api_key
     }   
 

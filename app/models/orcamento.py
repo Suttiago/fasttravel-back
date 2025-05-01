@@ -7,7 +7,3 @@ class Orcamento(BaseModel):
     check_out : date
     adultos: int
     criancas : int
-    
-
-    
-  

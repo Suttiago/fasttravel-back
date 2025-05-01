@@ -1,20 +1,12 @@
-from database.db import Database 
+from app.database.banco import Database 
 from dotenv import load_dotenv
+from flask import Blueprint, render_template, request, redirect, url_for, app,Flask
 import os
 
+app = Flask(__name__)
 
 
-#conexao banco
-load_dotenv()
 
-banco = Database(
-    usuario = os.getenv('DB_USER'),
-    senha = os.getenv('DB_PASSWORD'),
-    host = os.getenv('DB_HOST'),
-    porta = os.getenv('DB_PORT'),
-    nome_banco = os.getenv('DB_BAME')
-)
-banco.conectar_banco()
 
 
 

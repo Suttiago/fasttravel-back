@@ -1,8 +1,7 @@
-
 from pydantic import BaseModel
 from typing import List
 from datetime import date
-from orcamento import Orcamento
+from models.orcamento import Orcamento
 
 class Usuario(BaseModel):
     nome : str 
@@ -10,7 +9,6 @@ class Usuario(BaseModel):
     renda_mensal : float
     trabalho : str
     data_nascimento : date
-    orcamentos: List[Orcamento] = []
     
     def novo_orcamento(self, destino: str, check_in: date, check_out: date, adultos: int, criancas: int):
         novo_orcamento = Orcamento(
