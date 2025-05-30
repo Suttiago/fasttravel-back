@@ -1,12 +1,12 @@
 from flask import Blueprint, request, jsonify
 from services.UserService import UserService
-#from database.db import get_db
+from database.db import get_db
 from models.Usuario import Usuario
 user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/usuarios', methods = ['POST'])
 def criar_usuario():
-    db =  0 #next(get_db())
+    db =  next(get_db())
     service = UserService(db)
     data = request.form
     usuario = Usuario(
