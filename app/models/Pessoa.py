@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, Float, ForeignKey
-#from database.db import Base
+from database.db import Base
 
 
 class Pessoa():
