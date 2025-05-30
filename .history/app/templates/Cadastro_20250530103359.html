@@ -12,10 +12,14 @@
 </head>
 
 <body class="bg-dark text-white">
-    <h2>FastTravel</h2>
-    <br>
-    <img height="50px" width="50px" src="{{ url_for('static', filename='logo_branco.png') }}" alt="Logo FastTravel" width="40" height="40">
+
+ <div class="branding text-center my-4">
+  <div class="d-inline-flex align-items-center gap-2">
+    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo FastTravel" width="40" height="40">
+    <span class="fs-4 fw-bold text-white">FastTravel</span>
+  </div>
 </div>
+
   <div class="form-container">
     <h2 class="text-center mb-4">Registro de usuário</h2>
     <form action="/usuarios" method="POST">

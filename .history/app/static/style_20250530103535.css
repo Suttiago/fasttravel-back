@@ -25,7 +25,9 @@ body {
   .input-group-text {
     background-color: #020000;
     border: none;
-  }  
+    color: rgb(7, 0, 0);
+  }
+  
  /* .form-control, .form-control:focus {
     background-color: #000000;
     border: none;
@@ -43,8 +45,26 @@ body {
   }
   */
   placeholder {
-    color: #000000; /* tom cinza claro para melhor visibilidade */
+    color: #661313; /* tom cinza claro para melhor visibilidade */
     opacity: 1; /* força a visibilidade total */
   }
 
-  
+  .branding {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  gap: 0.5rem;
+  flex-direction: row;
+}
+
+.branding img {
+  height: 40px;
+  width: auto;
+}
+
+.branding span {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+}

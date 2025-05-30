@@ -25,7 +25,9 @@ body {
   .input-group-text {
     background-color: #020000;
     border: none;
-  }  
+    color: rgb(7, 0, 0);
+  }
+  
  /* .form-control, .form-control:focus {
     background-color: #000000;
     border: none;
@@ -43,8 +45,6 @@ body {
   }
   */
   placeholder {
-    color: #000000; /* tom cinza claro para melhor visibilidade */
+    color: #661313; /* tom cinza claro para melhor visibilidade */
     opacity: 1; /* força a visibilidade total */
   }
-
-  

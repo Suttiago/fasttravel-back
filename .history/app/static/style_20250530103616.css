@@ -25,7 +25,9 @@ body {
   .input-group-text {
     background-color: #020000;
     border: none;
-  }  
+    color: rgb(7, 0, 0);
+  }
+  
  /* .form-control, .form-control:focus {
     background-color: #000000;
     border: none;

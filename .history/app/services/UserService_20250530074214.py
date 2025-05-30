@@ -9,12 +9,11 @@ class UserService:
         return self.repo.criar_usuario(usuario)
     
     def listar_usuario(self,usuario:Usuario):
-        return self.repo.listar_usuarios(usuario)
-        
-    def editar_usuario(self, usuario:Usuario):
-        return self.repo.editar_usuario(usuario)
+        self.repo.listar_usuarios(usuario)
         
     def excluir_usuario(self,usuario:Usuario):
-        return self.repo.excluir_usuario(usuario)
+        self.repo.excluir_usuario(usuario)
         
+    def editar_usuario(self, usuario:Usuario):
+        self.repo.editar_usuario(usuario)
         
