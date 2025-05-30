@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, app,Flask
-from projeto_viagens.app.controllers.UserController import user_bp
+from controllers.UserController import user_bp
 
 app = Flask(__name__, template_folder="templates")
 

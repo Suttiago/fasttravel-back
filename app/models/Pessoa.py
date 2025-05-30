@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, Date, Float, ForeignKey
-from database.db import Base
+#from database.db import Base
 
 
-class Pessoa(Base):
+class Pessoa():
     __tablename__ = 'PESSOAS'
     
     id = Column(Integer, primary_key=True)
