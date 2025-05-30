@@ -1,15 +1,8 @@
-from datetime import date
-from models.orcamento import Orcamento
-from controllers.orcamento_controller import Orcamento_controller
-from controllers.user_controller import User_controller
-from models.user import Usuario
-
-usuario = Usuario(
-    nome ='izzy',
-    cpf = '071.081.11-24',
-    renda_mensal= 2.300,
-    trabalho= 'Estagiária neddiji',
-    data_nascimento= date(2005,10,5)
-)
-controller = User_controller()
-controller.inserir_usuario(usuario)
+from database.db import Base, engine
+from models.Usuario import Usuario
+from models.PlanoPagamento import PlanoPagamento
+from models.ContaReceber import ContaReceber
+from models.Dependentes import Dependentes
+from models.Orcamento import Orcamento
+from models.Pessoa import Pessoa
+Base.metadata.create_all(bind=engine)

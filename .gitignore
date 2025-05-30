@@ -48,3 +48,5 @@ Thumbs.db
 database/
 
 app/views/front_end/node_modules
+
+projeto_viagens\app\test.py
