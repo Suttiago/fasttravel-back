@@ -12,7 +12,6 @@ class Orcamento(Base):
     aviao = Column(String, nullable=False)
     linha_aerea = Column(String, nullable=False)
     preco_passagem = Column(Float, nullable=False)
+    destino_id = Column(Integer, ForeignKey('DESTINOS.id'))
     
-    usuario_id = Column(Integer,ForeignKey('USUARIOS.ID'),nullable=False)
-    
-    usuario = relationship("Usuario", back_populates="orcamentos")
+    destino = relationship("Destino", back_populates="info_flights")
