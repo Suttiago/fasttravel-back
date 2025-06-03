@@ -11,6 +11,8 @@ class Usuario(Pessoa):
     
     dependentes = relationship("Dependentes", back_populates="usuarios", foreign_keys="[Dependentes.usuario_id]")
     orcamento = relationship("Orcamentos", back_populates='usuarios')
+    destinos = relationship("Destino", back_populates="usuario")
+
     __mapper_args__ = {
         'polymorphic_identity': 'usuario',
     }
