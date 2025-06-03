@@ -10,7 +10,6 @@ class Orcamento(Base):
     hotel_classification = Column(String,nullable=False)
     hotel_description = Column(String, nullable=False)
     hotel_price = Column(Float, nullable=False)
-    
-    usuario_id = Column(Integer,ForeignKey('USUARIOS.ID'),nullable=False)
-    
-    usuario = relationship("Usuario", back_populates="orcamentos")
+    destino_id = Column(Integer, ForeignKey('DESTINOS.id'))
+
+    destino = relationship("Destino", back_populates="info_flights")
