@@ -14,4 +14,7 @@ class Orcamento(Base):
     destino_id = Column(Integer, ForeignKey('DESTINOS.id'))
     destino = relationship("Destino", back_populates="orcamentos")
 
+    # Relacionamento com Contas a Receber
     contas_receber = relationship("ContaReceber", back_populates="orcamento", cascade="all, delete-orphan")
+
+  
