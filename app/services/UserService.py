@@ -17,4 +17,10 @@ class UserService:
     def excluir_usuario(self,usuario:Usuario):
         return self.repo.excluir_usuario(usuario)
         
+    def autenticar(self,email,senha):
+        usuario = self.repo.buscar_email(email)
+        if usuario and usuario.senha ==senha:
+            return usuario
+        return None
+        
         

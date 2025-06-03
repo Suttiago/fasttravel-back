@@ -2,9 +2,10 @@ from flask import Blueprint, request, jsonify
 from services.DependenteService import DependenteService
 from database.db import get_db
 from models.Dependentes import Dependentes
-user_bp = Blueprint('user', __name__)
 
-@user_bp.route('/usuarios', methods = ['POST'])
+dependente_bp = Blueprint('dependente', __name__)
+
+@dependente_bp.route('/CadastroDependentes', methods = ['POST'])
 def criar_dependente():
     db = next(get_db())
     service = DependenteService(db)

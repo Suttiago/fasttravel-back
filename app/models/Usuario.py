@@ -9,8 +9,8 @@ class Usuario(Pessoa):
     email = Column(String, unique=True, nullable=False)
     senha = Column(String, nullable=False)
     
-    dependentes = relationship("Dependentes", back_populates="usuario", foreign_keys="[Dependentes.usuario_id]")
-    
+    dependentes = relationship("Dependentes", back_populates="usuarios", foreign_keys="[Dependentes.usuario_id]")
+    orcamento = relationship("Orcamentos", back_populates='usuarios')
     __mapper_args__ = {
         'polymorphic_identity': 'usuario',
     }

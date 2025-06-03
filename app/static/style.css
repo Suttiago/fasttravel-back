@@ -1,17 +1,4 @@
-/* Header fixo e responsivo */
-header {
-    width: 100%;
-    height: 80px; /* Ajuste conforme necessário */
-    background-color: #ff0000;
-    display: flex;
-    justify-content: space-between; /* Alinha os elementos corretamente */
-    align-items: center;
-    padding: 0 20px;
-    position: fixed; /* Mantém fixo no topo */
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Garante que o header esteja acima de tudo */
-}
+
 
 /* Evita que o conteúdo fique oculto pelo header */
 body {
@@ -25,15 +12,18 @@ body {
     padding-top: 100px; /* Adiciona espaço suficiente para o header */
 }
 
-/* Responsividade do Header */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        height: auto;
-        padding: 10px;
-        text-align: center;
-    }
+.container{
+width: 100%;
+    height: 80px; /* Ajuste conforme necessário */
+    display: flex;
+    justify-content: space-between; /* Alinha os elementos corretamente */
+    align-items: center;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Garante que o header esteja acima de tudo */
 }
+
+.nav
 
 
 /* Container do Formulário Responsivo */
