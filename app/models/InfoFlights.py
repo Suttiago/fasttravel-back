@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, Date, String,Float, ForeignKey
 from database.db import Base
 from sqlalchemy.orm import  relationship
 
-class Orcamento(Base):
+class Passagens(Base):
     __tablename__ = 'INFOFLIGHTS'
     
     id = Column(Integer, primary_key=True)

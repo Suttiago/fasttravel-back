@@ -11,7 +11,7 @@ class Destino(Base):
     adultos = Column(Integer, nullable=False)
     criancas = Column(Integer, nullable=False)
     Status = Column(String, nullable=False)    
-    usuario_id = Column(Integer,ForeignKey('USUARIOS.ID'),nullable=False)
+    usuario_id = Column(Integer,ForeignKey('USUARIOS.id'),nullable=False)
     
     usuario = relationship("Usuario", back_populates="destinos")
 

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, Float, String, ForeignKey
 from database.db import Base
 from sqlalchemy.orm import  relationship
 
-class Orcamento(Base):
+class Hotels(Base):
     __tablename__ = 'INFOHOTELS'
     
     id = Column(Integer, primary_key=True)

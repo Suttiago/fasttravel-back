@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import  relationship
 from models.Pessoa import Pessoa
-from models.Dependentes import Dependentes
 class Usuario(Pessoa):
     __tablename__='USUARIOS'
     
@@ -9,7 +8,6 @@ class Usuario(Pessoa):
     email = Column(String, unique=True, nullable=False)
     senha = Column(String, nullable=False)
     
-    dependentes = relationship("Dependentes", back_populates="usuarios", foreign_keys="[Dependentes.usuario_id]")
     orcamento = relationship("Orcamentos", back_populates='usuarios')
     destinos = relationship("Destino", back_populates="usuario")
 
