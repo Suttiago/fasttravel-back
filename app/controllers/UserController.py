@@ -5,7 +5,7 @@ from models.Usuario import Usuario
 
 user_bp = Blueprint('user', __name__)
 
-@user_bp.route('/usuarios', methods = ['POST'])
+@user_bp.route('/CadastroUsuario', methods = ['POST'])
 
 def criar_usuario():
     db =  next(get_db())
@@ -26,18 +26,18 @@ def criar_usuario():
     return jsonify(usuario_criado.to_dict()), 201
 
 
-@user_bp.route('/login', methods=['POST', 'GET'])
+@user_bp.route('/Login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         db =  next(get_db())
         service = UserService(db)
-        email = request.form('email')
-        senha = request.form('senha') 
+        email = request.form.get('email')
+        senha = request.form.get('senha') 
         usuario = service.autenticar(email,senha)
         if usuario:
-            session['usuario.id'] = usuario.id
+            session['usuario_id'] = usuario.id
             flash('Login realizado com sucesso!!')
-            return redirect(url_for('users'))       
+            return redirect(url_for('index'))       
         else:
             flash('Usuário ou senha incorretos')
     return render_template('login.html')

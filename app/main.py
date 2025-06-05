@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, app,Flask
 from controllers.UserController import user_bp
-from controllers.DepedentaController import dependente_bp
+from controllers.DestinoController import destio_bp
+from controllers.PessoaController import pessoa_bp
 from dotenv import load_dotenv
 import os
 
@@ -8,17 +9,16 @@ load_dotenv()
 app = Flask(__name__, template_folder="templates")
 app.secret_key = os.getenv('SECRET_KEY')
 app.register_blueprint(user_bp)
+app.register_blueprint(destio_bp)
+app.register_blueprint(pessoa_bp)
 
-@app.route('/usuarios', methods=['GET'])
+@app.route('/', methods=['GET','POST'])
+def index():
+    return render_template('index.html')
+
+@app.route('/CadastroUsuario', methods=['GET'])
 def users():
     return render_template('cadastro.html')
-
-
-app.register_blueprint(dependente_bp)
-@app.route('/CadastroDependentes', methods=['GET'])
-def dependentes():
-    return render_template('CadastroDependentes.html')
-
 
 
 if __name__ == '__main__':

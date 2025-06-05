@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
 from database.db import Base
 from sqlalchemy.orm import relationship
-
+from models.ContaReceber import ContaReceber
 class Orcamento(Base):
     __tablename__ = 'ORCAMENTOS'
 
@@ -12,9 +12,9 @@ class Orcamento(Base):
     status = Column(String, nullable=False)
 
     destino_id = Column(Integer, ForeignKey('DESTINOS.id'))
-    destino = relationship("Destino", back_populates="orcamentos")
+    destinos = relationship("Destino", back_populates="orcamentos")
 
     # Relacionamento com Contas a Receber
-    contas_receber = relationship("ContaReceber", back_populates="orcamento", cascade="all, delete-orphan")
+    contas_receber = relationship("ContaReceber", back_populates="orcamentos", cascade="all, delete-orphan")
 
   

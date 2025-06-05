@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, Date
 from database.db import Base
 from sqlalchemy.orm import relationship
-
+from models.PlanoPagamento import PlanoPagamento
 class ContaReceber(Base):
     __tablename__ = 'CONTAS_RECEBER'
 
@@ -12,9 +12,8 @@ class ContaReceber(Base):
     n_parcelas = Column(Integer, nullable=False)
     status = Column(String, nullable=False)
 
-    # FK para orçamento
     orcamento_id = Column(Integer, ForeignKey('ORCAMENTOS.id'))
-    orcamento = relationship("Orcamento", back_populates="contas_receber")
+    orcamentos = relationship("Orcamento", back_populates="contas_receber")
 
     # FK para plano de pagamento
     plano_pagamento_id = Column(Integer, ForeignKey('PLANOS_PAGAMENTO.id'))

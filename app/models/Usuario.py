@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import  relationship
 from models.Pessoa import Pessoa
+from models.Destino import Destino
+
 class Usuario(Pessoa):
     __tablename__='USUARIOS'
     
@@ -8,7 +10,6 @@ class Usuario(Pessoa):
     email = Column(String, unique=True, nullable=False)
     senha = Column(String, nullable=False)
     
-    orcamento = relationship("Orcamentos", back_populates='usuarios')
     destinos = relationship("Destino", back_populates="usuario")
 
     __mapper_args__ = {
@@ -26,4 +27,4 @@ class Usuario(Pessoa):
             "data_nascimento": self.data_nascimento
             # Adicione outros campos se necessário
         }
-    
+

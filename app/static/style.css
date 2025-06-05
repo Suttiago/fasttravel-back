@@ -1,6 +1,21 @@
+header {
+    width: 100%;
+    height: 80px;
+    background-color: #020000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    margin: 0;         /* Garante que não há margem */
+    box-shadow: none;  /* Remove qualquer sombra se houver */
+}
 
-
-/* Evita que o conteúdo fique oculto pelo header */
+/* Ajuste do body para centralizar o formulário e não ficar atrás do header */
 body {
     background-color: #121212;
     color: #ffffff;
@@ -8,23 +23,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 1rem;
-    padding-top: 100px; /* Adiciona espaço suficiente para o header */
+    padding-top: 100px; /* Espaço para o header fixo */
 }
-
-.container{
-width: 100%;
-    height: 80px; /* Ajuste conforme necessário */
-    display: flex;
-    justify-content: space-between; /* Alinha os elementos corretamente */
-    align-items: center;
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Garante que o header esteja acima de tudo */
-}
-
-.nav
-
 
 /* Container do Formulário Responsivo */
 .form-container {
@@ -35,6 +37,9 @@ width: 100%;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Ajuste dos Inputs */
@@ -71,4 +76,56 @@ width: 100%;
         width: 90%;
         padding: 1.5rem;
     }
+}
+
+/* Estilo para o formulário de login */
+.login-container {
+    background-color: #1f1f1f;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-container h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #292929;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.login-container input[type="email"]::placeholder,
+.login-container input[type="password"]::placeholder {
+    color: #cccccc;
+}
+
+.login-container button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #6e0823;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.login-container button[type="submit"]:hover {
+    background-color: #810826;
 }

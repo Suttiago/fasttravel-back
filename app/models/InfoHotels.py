@@ -12,4 +12,4 @@ class Hotels(Base):
     hotel_price = Column(Float, nullable=False)
     destino_id = Column(Integer, ForeignKey('DESTINOS.id'))
 
-    destino = relationship("Destino", back_populates="info_flights")
+    destinos = relationship("Destino", back_populates="info_hotels")

@@ -1,8 +1,7 @@
 from sqlalchemy import Column, Integer, Date, String,Float, ForeignKey
 from database.db import Base
 from sqlalchemy.orm import  relationship
-
-class Passagens(Base):
+class Passagem(Base):
     __tablename__ = 'INFOFLIGHTS'
     
     id = Column(Integer, primary_key=True)
@@ -14,4 +13,4 @@ class Passagens(Base):
     preco_passagem = Column(Float, nullable=False)
     destino_id = Column(Integer, ForeignKey('DESTINOS.id'))
     
-    destino = relationship("Destino", back_populates="info_flights")
+    destinos = relationship("Destino", back_populates="info_flights")

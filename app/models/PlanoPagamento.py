@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from database.db import Base
 from sqlalchemy.orm import relationship
-
 class PlanoPagamento(Base):
     __tablename__ = 'PLANOS_PAGAMENTO'
 

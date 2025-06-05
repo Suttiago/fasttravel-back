@@ -37,4 +37,4 @@ class UserRepository:
         return False
     
     def buscar_email(self, email):
-        return self.db.query(Usuario).filter_by(email=email).first
+        return self.db.query(Usuario).filter_by(email=email).first()
