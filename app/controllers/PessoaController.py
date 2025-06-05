@@ -10,19 +10,13 @@ def cadastrar_dependente():
     db = next(get_db())
     service = PessoaService(db)
     if request.method == 'POST':
-        nome = request.form.get('nome')
-        data_nascimento = request.form.get('data_nascimento')
-        sexo = request.form.get('sexo')
-        profissao = request.form.get('profissao')
-        renda = request.form.get('renda')
-        responsavel_id = request.form.get('responsavel_id')
         dependente = Pessoa(
-            nome=nome,
-            data_nascimento=data_nascimento,
-            sexo=sexo,
-            profissao=profissao,
-            renda=renda,
-            responsavel_id=responsavel_id
+            nome = request.form.get('nome')
+            data_nascimento = request.form.get('data_nascimento')
+            sexo = request.form.get('sexo')
+            profissao = request.form.get('profissao')
+            renda = request.form.get('renda')
+            responsavel_id = session.get('usuario_id')
         )
         service.criar_pessoa(dependente)
         flash('Dependente cadastrado com sucesso!')
