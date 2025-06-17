@@ -27,6 +27,11 @@
                             <td>{{ destino.adultos }}</td>
                             <td>{{ destino.criancas }}</td>
                             <td>{{ destino.status or '-' }}</td>
+                            <td>
+                                <form action="{{ url_for('destino.excluir_id', destino_id=destino.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este destino?');">Excluir</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -36,7 +36,7 @@ def login():
         usuario = service.autenticar(email,senha)
         if usuario:
             session['usuario_id'] = usuario.id
-            flash('Login realizado com sucesso!!')
+            #flash('Login realizado com sucesso!!')
             return redirect(url_for('index'))       
         else:
             flash('Usuário ou senha incorretos')

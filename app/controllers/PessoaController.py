@@ -11,24 +11,22 @@ def cadastrar_dependente():
     service = PessoaService(db)
     if request.method == 'POST':
         dependente = Pessoa(
-            nome = request.form.get('nome')
-            data_nascimento = request.form.get('data_nascimento')
-            sexo = request.form.get('sexo')
-            profissao = request.form.get('profissao')
-            renda = request.form.get('renda')
+            nome = request.form.get('nome'),
+            data_nascimento = request.form.get('data_nascimento'),
+            cpf = request.form.get('cpf'),
+            sexo = request.form.get('sexo'),
             responsavel_id = session.get('usuario_id')
         )
         service.criar_pessoa(dependente)
         flash('Dependente cadastrado com sucesso!')
-        return redirect(url_for('pessoa.cadastrar_dependente'))
+        return redirect(url_for('index'))
     # Para GET, lista possíveis responsáveis
-    pessoas = service.listar_pessoas()
-    return render_template('CadastroDependentes.html', pessoas=pessoas)
+    return render_template('CadastroDependentes.html')
 
-@pessoa_bp.route('/MeusDependentes')
+@pessoa_bp.route('/Dependentes')
 def meus_dependentes():
     db = next(get_db())
     service = PessoaService(db)
     usuario_id = session.get('usuario_id')
     dependentes = service.listar_dependentes(usuario_id)
-    return render_template('MeusDependentes.html', dependentes=dependentes)
+    return render_template('Dependentes.html', dependentes=dependentes)

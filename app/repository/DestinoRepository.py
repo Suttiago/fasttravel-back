@@ -26,8 +26,8 @@ class DestinoRepository:
             return destino_db
         
     
-    def excluir_destinos(self, destino: Destino):
-        destino_db = self.db.query(Destino).filter_by(id=destino.id).first()
+    def excluir_destinos(self, destino_id):
+        destino_db = self.db.query(Destino).filter_by(id=destino_id).first()
         if destino_db:
             self.db.delete(destino_db)
             self.db.commit()

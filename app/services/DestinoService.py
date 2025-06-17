@@ -18,5 +18,5 @@ class DestinoService:
     def editar_destino(self,destino: Destino):
         return self.repo.editar_destinos(destino)
         
-    def excluir_destino(self, destino: Destino):
-        return self.repo.excluir_destinos(destino)
+    def excluir_destino(self, destino_id):
+        return self.repo.excluir_destinos(destino_id)
