@@ -4,7 +4,7 @@ class PessoaRepository:
     def __init__(self, db):
         self.db = db
 
-    def criar_pessoa(self, pessoa: Pessoa):
+    def criar_pessoas(self, pessoa: Pessoa):
         self.db.add(pessoa)
         self.db.commit()
         self.db.refresh(pessoa)
@@ -12,6 +12,8 @@ class PessoaRepository:
 
     def listar_pessoas(self):
         return self.db.query(Pessoa).all()
+
+    def editar_pessoas(self, pessoa:Pessoa):
 
     def buscar_por_id(self, pessoa_id):
         return self.db.query(Pessoa).filter_by(id=pessoa_id).first()
