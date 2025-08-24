@@ -6,40 +6,142 @@
     <div class="container" style="margin-top: 100px;">
         <h2 class="mb-4 text-center">Meus Destinos</h2>
         {% if destinos %}
-            <div class="table-responsive">
-                <table class="table table-dark table-striped table-bordered align-middle">
-                    <thead>
-                        <tr>
-                            <th>Destino</th>
-                            <th>Data de Chegada</th>
-                            <th>Data de Saída</th>
-                            <th>Adultos</th>
-                            <th>Crianças</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for destino in destinos %}
-                        <tr>
-                            <td>{{ destino.destino }}</td>
-                            <td>{{ destino.check_in }}</td>
-                            <td>{{ destino.check_out }}</td>
-                            <td>{{ destino.adultos }}</td>
-                            <td>{{ destino.criancas }}</td>
-                            <td>{{ destino.status or '-' }}</td>
-                            <td>
-                                <form action="{{ url_for('destino.excluir_id', destino_id=destino.id) }}" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este destino?');">Excluir</button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+        <div class="table-responsive">
+            <table class="table table-dark table-striped table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th>Destino</th>
+                        <th>Data de Chegada</th>
+                        <th>Data de Saída</th>
+                        <th>Adultos</th>
+                        <th>Crianças</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for destino in destinos %}
+                    <tr>
+                        <td>{{ destino.destino }}</td>
+                        <td>{{ destino.check_in }}</td>
+                        <td>{{ destino.check_out }}</td>
+                        <td>{{ destino.adultos }}</td>
+                        <td>{{ destino.criancas }}</td>
+                        <td>{{ destino.status or '-' }}</td>
+                        <td>
+                            <form action="{{ url_for('destino.excluir_destinos', destino_id=destino.id) }}"
+                                method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Tem certeza que deseja excluir este destino?');">Excluir</button>
+                            </form>
+                        
+                            <button 
+                                type="button" 
+                                class="btn btn-warning btn-sm" 
+                                data-bs-toggle="modal"
+                                data-bs-target="#editarDestinoModal"
+                                data-bs-id="{{ destino.id }}"
+                                data-bs-destino="{{ destino.destino }}"
+                                data-bs-checkin="{{ destino.check_in }}"
+                                data-bs-checkout="{{ destino.check_out }}"
+                                data-bs-adultos="{{ destino.adultos }}"
+                                data-bs-criancas="{{ destino.criancas }}"
+                                data-bs-status="{{ destino.status or '' }}">
+                                Editar
+                            </button>
+                        
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                    <!-- Modal de Edição -->
+                    <div class="modal fade" id="editarDestinoModal" tabindex="-1"
+                        aria-labelledby="editarDestinoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form method="POST" id="formEditarDestino">
+                                <div class="modal-content bg-dark text-white">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editarDestinoModalLabel">Editar Destino</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                            aria-label="Fechar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" name="destino_id" id="edit-destino-id">
+                                        <div class="mb-3">
+                                            <label for="edit-destino" class="form-label">Destino</label>
+                                            <input type="text" class="form-control" id="edit-destino" name="destino"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="edit-checkin" class="form-label">Data de Chegada</label>
+                                            <input type="date" class="form-control" id="edit-checkin" name="check_in"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="edit-checkout" class="form-label">Data de Saída</label>
+                                            <input type="date" class="form-control" id="edit-checkout" name="check_out"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="edit-adultos" class="form-label">Adultos</label>
+                                            <input type="number" class="form-control" id="edit-adultos" name="adultos"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="edit-criancas" class="form-label">Crianças</label>
+                                            <input type="number" class="form-control" id="edit-criancas" name="criancas"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="edit-status" class="form-label">Status</label>
+                                            <input type="text" class="form-control" id="edit-status" name="status">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </table>
+        </div>
         {% else %}
-            <p class="text-center">Nenhum destino cadastrado.</p>
+        <p class="text-center">Nenhum destino cadastrado.</p>
         {% endif %}
     </div>
+    <script>
+    const editarDestinoModal = document.getElementById('editarDestinoModal');
+
+    editarDestinoModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        if (!button) return;
+
+        // Pegando os dados do botão
+        const id = button.getAttribute('data-bs-id');
+        const destino = button.getAttribute('data-bs-destino');
+        const checkin = button.getAttribute('data-bs-checkin');
+        const checkout = button.getAttribute('data-bs-checkout');
+        const adultos = button.getAttribute('data-bs-adultos');
+        const criancas = button.getAttribute('data-bs-criancas');
+        const status = button.getAttribute('data-bs-status');
+
+        // Inserindo nos campos do modal
+        document.getElementById('edit-destino-id').value = id;
+        document.getElementById('edit-destino').value = destino;
+        document.getElementById('edit-checkin').value = checkin;
+        document.getElementById('edit-checkout').value = checkout;
+        document.getElementById('edit-adultos').value = adultos;
+        document.getElementById('edit-criancas').value = criancas;
+        document.getElementById('edit-status').value = status;
+
+        // Atualiza a action do formulário dinamicamente
+        document.getElementById('formEditarDestino').action = "/EditarDestino/" + id;
+    });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

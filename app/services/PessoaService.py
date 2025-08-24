@@ -5,7 +5,7 @@ class PessoaService:
         self.repo = PessoaRepository(db)
 
     def criar_pessoa(self, pessoa):
-        return self.repo.criar_pessoa(pessoa)
+        return self.repo.criar_pessoas(pessoa)
 
     def listar_pessoas(self):
         return self.repo.listar_pessoas()
@@ -15,3 +15,6 @@ class PessoaService:
 
     def listar_dependentes(self, responsavel_id):
         return self.repo.listar_dependentes(responsavel_id)
+    
+    def excluir_dependentes(self, dependente_id):
+        return self.repo.excluir_dependentes(dependente_id)

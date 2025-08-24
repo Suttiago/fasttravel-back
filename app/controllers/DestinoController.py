@@ -24,11 +24,11 @@ def novo_destino():
         )
         destino_criado = service.salvar_destino(destino)
         flash('Destino cadastrado com sucesso!')
-        return redirect(url_for('index'))  # Redireciona para a index após cadastro
+        return redirect(url_for('index')) 
     return render_template('CadastroDestino.html')
 
 @destio_bp.route('/MeusDestinos')
-def meus_destinos():
+def listar_destinos():
     usuario_id = session.get('usuario_id')
     if not usuario_id:
         return redirect(url_for('user.login'))
@@ -38,10 +38,28 @@ def meus_destinos():
     return render_template('Destinos.html', destinos=destinos)
 
 @destio_bp.route('/ExcluirDestino/<int:destino_id>',methods=['POST'])
-def excluir_id(destino_id):
+def excluir_destinos(destino_id):
     db = next(get_db())
     service = DestinoService(db)
     service.excluir_destino(destino_id)
     flash('Destino excluído com sucesso!')
-    return redirect(url_for('destino.meus_destinos'))
+    return redirect(url_for('destino.listar_destinos'))
+
+@destio_bp.route('/EditarDestino/<int:destino_id>',methods=['POST'])
+def editar_destinos(destino_id):
+    db = next(get_db())
+    service = DestinoService(db)
+    data = request.form
+    service.editar_destinos(
+        destino_id=destino_id,
+        destino=data.get('destino'),
+        check_in=data.get('check_in'),
+        check_out=data.get('check_out'),
+        adultos=data.get('adultos'),
+        criancas=data.get('criancas'),
+        status=data.get('status')
+    )
+    
+    flash('Destino editado com sucesso!')
+    return redirect(url_for('destino.listar_destinos'))
     

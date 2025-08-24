@@ -30,3 +30,11 @@ def meus_dependentes():
     usuario_id = session.get('usuario_id')
     dependentes = service.listar_dependentes(usuario_id)
     return render_template('Dependentes.html', dependentes=dependentes)
+
+@pessoa_bp.route('/ExcluirDependente/<int:dependente_id>',methods=['POST'])
+def excluir_dependentes(dependente_id):
+    db = next(get_db())
+    service = PessoaService(db)
+    service.excluir_dependentes(dependente_id)
+    flash('Destino excluído com sucesso!')
+    return redirect(url_for('pessoa.listar_dependentes'))
