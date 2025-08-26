@@ -24,7 +24,7 @@ def cadastrar_dependente():
     return render_template('CadastroDependentes.html')
 
 @pessoa_bp.route('/Dependentes')
-def meus_dependentes():
+def listar_dependentes():
     db = next(get_db())
     service = PessoaService(db)
     usuario_id = session.get('usuario_id')
@@ -37,4 +37,19 @@ def excluir_dependentes(dependente_id):
     service = PessoaService(db)
     service.excluir_dependentes(dependente_id)
     flash('Destino excluído com sucesso!')
+    return redirect(url_for('pessoa.listar_dependentes'))
+
+@pessoa_bp.route('/EditarDependente/<int:dependente_id>',methods=['POST'])
+def editar_dependentes(dependente_id):
+    db = next(get_db())
+    service = PessoaService(db)
+    data = request.form
+    service.editar_dependentes(
+        dependente_id= dependente_id,
+        nome = data.get('nome'),
+        cpf=data.get('cpf'),
+        data_nascimento=data.get('data_nascimento')        
+    )
+    
+    flash('Dependente editado com sucesso!')
     return redirect(url_for('pessoa.listar_dependentes'))
