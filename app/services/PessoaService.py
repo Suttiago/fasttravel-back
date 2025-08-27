@@ -3,6 +3,7 @@ from models.Pessoa import Pessoa
 
 class PessoaService:
     def __init__(self, db):
+        self.db = db
         self.repo = PessoaRepository(db)
 
     def criar_pessoa(self, pessoa):
