@@ -41,12 +41,12 @@
               <form action="{{ url_for('destino.excluir_destinos', destino_id=destino.id) }}" method="POST" style="display:inline;">
                 <button type="submit" class="btn btn-danger btn-sm"
                   onclick="return confirm('Tem certeza que deseja excluir este destino?');">
-                  Excluir
+                  <i class="bi bi-trash"></i> 
                 </button>
               </form>
 
               <!-- Editar -->
-              <button type="button" class="btn btn-warning btn-sm" 
+              <button type="button" class="btn btn-secondary btn-sm" 
                 data-bs-toggle="modal" data-bs-target="#editarDestinoModal"
                 data-bs-id="{{ destino.id }}"
                 data-bs-destino="{{ destino.destino }}"
@@ -55,7 +55,7 @@
                 data-bs-adultos="{{ destino.adultos }}"
                 data-bs-criancas="{{ destino.criancas }}"
                 data-bs-status="{{ destino.status or '' }}">
-                Editar
+                <i class="bi bi-pencil-square"></i> 
               </button>
             </td>
           </tr>
