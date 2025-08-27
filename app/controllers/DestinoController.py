@@ -22,10 +22,14 @@ def novo_destino():
             criancas=data.get("criancas"),
             usuario_id=session.get('usuario_id')
         )
-        destino_criado = service.salvar_destino(destino)
+        if destino.check_in > destino.check_out:
+            flash('Não se pode ter uma data de saída maior que a data de chegada')
+        else:
+            service.salvar_destino(destino)
+            
         flash('Destino cadastrado com sucesso!')
-        return redirect(url_for('index')) 
-    return render_template('CadastroDestino.html')
+        return redirect(url_for('destino.listar_destinos')) 
+    return render_template('Destinos.html')
 
 @destio_bp.route('/MeusDestinos')
 def listar_destinos():
