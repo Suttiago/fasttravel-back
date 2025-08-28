@@ -1,0 +1,30 @@
+from models.InfoHotels import Hotel
+from repository.HotelRepository import HotelRepository
+
+class HotelService:
+    def __init__(self, db):
+        self.db = db
+        self.repo = HotelRepository(db)
+
+    def salvar_hotel(self, hotel: Hotel):
+        return self.repo.criar_hotel(hotel)
+    
+    def listar_hoteis(self):
+        return self.repo.listar_hoteis()
+
+    def listar_hoteis_por_destino(self, destino_id):
+        return self.db.query(Hotel).filter_by(destino_id=destino_id).all()
+
+    def editar_hotel(self, hotel_id, nome, preco, disponibilidade):
+        hotel_db = self.db.query(Hotel).filter_by(id=hotel_id).first()
+        if hotel_db:
+            hotel_db.nome = nome
+            hotel_db.preco = preco
+            hotel_db.disponibilidade = disponibilidade
+            self.db.commit()
+            self.db.refresh(hotel_db)
+            return hotel_db
+        return None
+    
+    def excluir_hotel(self, hotel_id):
+        return self.repo.excluir_hotel(hotel_id)
