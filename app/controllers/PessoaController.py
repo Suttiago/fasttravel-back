@@ -19,7 +19,7 @@ def cadastrar_dependente():
         )
         service.criar_pessoa(dependente)
         flash('Dependente cadastrado com sucesso!')
-        return redirect(url_for('index'))
+        return redirect(url_for('pessoa.listar_dependentes'))
     # Para GET, lista possíveis responsáveis
     return render_template('CadastroDependentes.html')
 
