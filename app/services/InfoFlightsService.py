@@ -1,28 +1,31 @@
-from dotenv import load_dotenv
-import os
-import requests
-import json
+from models.Passagem import Passagem
+from repository.PassagemRepository import PassagemRepository
 
-load_dotenv()
-hotel_api_key = os.getenv("API_KEY_HOTELS")
+class PassagemService:
+    def __init__(self, db):
+        self.db = db
+        self.repo = PassagemRepository(db)
 
-def pegar_passagens():
-    url = "https://serpapi.com/search?"
+    def salvar_passagem(self, passagem: Passagem):
+        return self.repo.criar_passagem(passagem)
+    
+    def listar_passagens(self):
+        return self.repo.listar_passagens()
 
-# Parâmetros da requisição teste
-    params = {
-    "engine": "google_flights",  
-    "api_key": hotel_api_key
-    }   
+    def listar_passagens_por_destino(self, destino_id):
+        return self.db.query(Passagem).filter_by(destino_id=destino_id).all()
 
-    try:
-        response = requests.get(url, params=params)
-        response.raise_for_status() 
-
-        data = response.json()
-        
-        print(data)
-    except requests.exceptions.RequestException as e:
-        print(f"Erro ao fazer a requisição: {e}")
-
-pegar_passagens() 
+    def editar_passagem(self, passagem_id, origem, destino, preco, disponibilidade):
+        passagem_db = self.db.query(Passagem).filter_by(id=passagem_id).first()
+        if passagem_db:
+            passagem_db.origem = origem
+            passagem_db.destino = destino
+            passagem_db.preco = preco
+            passagem_db.disponibilidade = disponibilidade
+            self.db.commit()
+            self.db.refresh(passagem_db)
+            return passagem_db
+        return None
+    
+    def excluir_passagem(self, passagem_id):
+        return self.repo.excluir_passagem(passagem_id)
