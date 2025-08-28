@@ -1,4 +1,4 @@
-from models.Hotels import Hotels
+from models.InfoHotels import Hotels
 
 class HotelsRepository:
     def __init__(self, db):
