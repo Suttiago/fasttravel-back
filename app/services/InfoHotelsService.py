@@ -2,6 +2,8 @@ from models.InfoHotels import Hotel
 from repository.InfoHotelsRepository import HotelRepository
 
 class HotelService:
+    load_dotenv()
+    hotel_api_key = os.getenv("API_KEY_HOTELS")
     def __init__(self, db):
         self.db = db
         self.repo = HotelRepository(db)
@@ -28,3 +30,21 @@ class HotelService:
     
     def excluir_hotel(self, hotel_id):
         return self.repo.excluir_hotel(hotel_id)
+
+    def buscar_hoteis(self,destino,check_in,check_out,adultos,criancas):
+        params = {
+              "engine": "google_hotels",
+              "q": destino,
+              "check_in_date": check_in,
+              "check_out_date": check_out,
+              "adults": adultos,
+              "children":criancas,
+              "currency": "BRL",
+              "gl": "br",
+              "hl": "pt-br",
+              "api_key": hotel_api_key
+        }
+
+        search = GoogleSearch(params)
+        results = search.get_dict()
+        return (json.dumps(results, indent=2, ensure_ascii=False))  
