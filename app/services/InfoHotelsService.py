@@ -1,5 +1,5 @@
 from models.InfoHotels import Hotel
-from repository.HotelRepository import HotelRepository
+from repository.InfoHotelsRepository import HotelRepository
 
 class HotelService:
     def __init__(self, db):

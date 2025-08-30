@@ -12,7 +12,7 @@ def pegar_hoteis():
 # Parâmetros da requisição teste
     params = {
     "engine": "google_hotels",  
-    "q":"mexico",
+    "q":"governador valadares",
     "check_in_date": "2025-08-29",
     "check_out_date": "2025-10-02",
     "api_key": hotel_api_key
