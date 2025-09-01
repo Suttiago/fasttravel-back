@@ -57,7 +57,12 @@
                 data-bs-status="{{ destino.status or '' }}">
                 <i class="bi bi-pencil-square"></i> 
               </button>
-            </td>
+              <form action="{{ url_for('hotel.buscar_hoteis', destino_id=destino.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-info btn-sm">
+                  <i class="bi bi-search"></i> Hotéis
+                </button>
+              </form>
+
           </tr>
           {% endfor %}
         </tbody>
@@ -155,6 +160,25 @@
     </div>
   </div>
 
+  <!-- Modal Hotéis -->
+<div class="modal fade" id="modalHoteis" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title">Hotéis Encontrados</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="hoteisResultado">
+        <p>Buscando hotéis...</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   <script>
     const editarDestinoModal = document.getElementById('editarDestinoModal');
 
@@ -184,6 +208,43 @@
       document.getElementById('formEditarDestino').action = "/EditarDestino/" + id;
     });
   </script>
+
+  <script>
+async function buscarHoteis(destinoId) {
+    let modal = new bootstrap.Modal(document.getElementById("modalHoteis"));
+    document.getElementById("hoteisResultado").innerHTML = "<p>Carregando hotéis...</p>";
+    modal.show();
+
+    try {
+        let response = await fetch(`/buscar_hoteis/${destinoId}`, { method: "POST" });
+        let data = await response.json();
+
+        if (response.ok) {
+            if (Array.isArray(data) && data.length > 0) {
+                let html = "<ul class='list-group list-group-flush'>";
+                data.forEach(hotel => {
+                    html += `
+                      <li class="list-group-item bg-dark text-white">
+                        <strong>${hotel.nome || "Sem nome"}</strong><br>
+                        Endereço: ${hotel.endereco || "Não informado"}<br>
+                        Preço: ${hotel.preco || "Indisponível"}
+                      </li>`;
+                });
+                html += "</ul>";
+                document.getElementById("hoteisResultado").innerHTML = html;
+            } else {
+                document.getElementById("hoteisResultado").innerHTML = "<p>Nenhum hotel encontrado.</p>";
+            }
+        } else {
+            document.getElementById("hoteisResultado").innerHTML = `<p class="text-danger">${data.error}</p>`;
+        }
+    } catch (err) {
+        console.error(err);
+        document.getElementById("hoteisResultado").innerHTML = "<p class='text-danger'>Erro ao buscar hotéis.</p>";
+    }
+}
+</script>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 </body>

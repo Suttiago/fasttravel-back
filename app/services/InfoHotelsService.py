@@ -1,24 +1,29 @@
-from models.InfoHotels import Hotel
-from repository.InfoHotelsRepository import HotelRepository
+from models.InfoHotels import Hotels
+from repository.InfoHotelsRepository import HotelsRepository
+from dotenv import load_dotenv
+import json
+import os
+from serpapi import GoogleSearch
+
 
 class HotelService:
     load_dotenv()
     hotel_api_key = os.getenv("API_KEY_HOTELS")
     def __init__(self, db):
         self.db = db
-        self.repo = HotelRepository(db)
+        self.repo = HotelsRepository(db)
 
-    def salvar_hotel(self, hotel: Hotel):
+    def salvar_hotel(self, hotel: Hotels):
         return self.repo.criar_hotel(hotel)
     
     def listar_hoteis(self):
         return self.repo.listar_hoteis()
 
     def listar_hoteis_por_destino(self, destino_id):
-        return self.db.query(Hotel).filter_by(destino_id=destino_id).all()
+        return self.db.query(Hotels).filter_by(destino_id=destino_id).all()
 
     def editar_hotel(self, hotel_id, nome, preco, disponibilidade):
-        hotel_db = self.db.query(Hotel).filter_by(id=hotel_id).first()
+        hotel_db = self.db.query(Hotels).filter_by(id=hotel_id).first()
         if hotel_db:
             hotel_db.nome = nome
             hotel_db.preco = preco
@@ -42,7 +47,7 @@ class HotelService:
               "currency": "BRL",
               "gl": "br",
               "hl": "pt-br",
-              "api_key": hotel_api_key
+              "api_key": os.getenv("HOTEL_API_KEY")
         }
 
         search = GoogleSearch(params)
