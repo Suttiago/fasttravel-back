@@ -57,11 +57,10 @@
                 data-bs-status="{{ destino.status or '' }}">
                 <i class="bi bi-pencil-square"></i> 
               </button>
-              <form action="{{ url_for('hotel.buscar_hoteis', destino_id=destino.id) }}" method="POST" style="display:inline;">
-                <button type="submit" class="btn btn-info btn-sm">
-                  <i class="bi bi-search"></i> Hotéis
+
+              <button type="button" class="btn btn-info btn-sm" onclick="buscarHoteis({{ destino.id }})">
+                <i class="bi bi-search"></i> Hotéis
                 </button>
-              </form>
 
           </tr>
           {% endfor %}
@@ -220,15 +219,31 @@ async function buscarHoteis(destinoId) {
         let data = await response.json();
 
         if (response.ok) {
-            if (Array.isArray(data) && data.length > 0) {
+            const hoteis = data.ads; 
+
+            if (hoteis && Array.isArray(hoteis) && hoteis.length > 0) {
                 let html = "<ul class='list-group list-group-flush'>";
-                data.forEach(hotel => {
+                hoteis.forEach(hotel => {
+                    const nome = hotel.name || "Sem nome";
+                    const endereco = hotel.address || "Não informado";
+                    const preco = hotel.price || "Indisponível";
+                    const link = hotel.link;
+                    const linkHtml = link ? `<a href="${link}" target="_blank" class="btn btn-primary btn-sm mt-2">Ver Oferta</a>` : '';
+                    const thumbnail = hotel.thumbnail ? `<img src="${hotel.thumbnail}" class="img-fluid" alt="Imagem do Hotel">` : '';
+
                     html += `
-                      <li class="list-group-item bg-dark text-white">
-                        <strong>${hotel.nome || "Sem nome"}</strong><br>
-                        Endereço: ${hotel.endereco || "Não informado"}<br>
-                        Preço: ${hotel.preco || "Indisponível"}
-                      </li>`;
+                        <li class="list-group-item bg-dark text-white d-flex align-items-center mb-3">
+                            <div class="me-3" style="min-width: 100px;">
+                                ${thumbnail}
+                            </div>
+                            <div>
+                                <h5>${nome}</h5>
+                                <p class="mb-1">Endereço: ${endereco}</p>
+                                <p class="mb-1">Preço: ${preco}</p>
+                                <p class="mb-0">Avaliação: ${hotel.overall_rating || 'N/A'} (${hotel.reviews || 0} avaliações)</p>
+                                ${linkHtml}
+                            </div>
+                        </li>`;
                 });
                 html += "</ul>";
                 document.getElementById("hoteisResultado").innerHTML = html;
@@ -236,10 +251,11 @@ async function buscarHoteis(destinoId) {
                 document.getElementById("hoteisResultado").innerHTML = "<p>Nenhum hotel encontrado.</p>";
             }
         } else {
+            // Se a resposta da API não for 200 (OK), exibe a mensagem de erro
             document.getElementById("hoteisResultado").innerHTML = `<p class="text-danger">${data.error}</p>`;
         }
     } catch (err) {
-        console.error(err);
+        console.error("Erro na requisição:", err);
         document.getElementById("hoteisResultado").innerHTML = "<p class='text-danger'>Erro ao buscar hotéis.</p>";
     }
 }
