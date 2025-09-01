@@ -1,6 +1,7 @@
 from models.InfoHotels import Hotel
 from repository.InfoHotelsRepository import HotelRepository
 
+
 class HotelService:
     load_dotenv()
     hotel_api_key = os.getenv("API_KEY_HOTELS")
