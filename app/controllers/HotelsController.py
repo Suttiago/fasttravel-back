@@ -1,9 +1,35 @@
 from flask import Blueprint, request, jsonify
-from service.InfoHotelsService import HotelService
-from models.InfoHotels import Hotel
+from services.InfoHotelsService import HotelService
+from models.InfoHotels import Hotels
 from database.db import get_db
-
+from models.Destino import Destino
 hotel_bp = Blueprint("hotel", __name__)
+
+@hotel_bp.route("/buscar_hoteis/<int:destino_id>", methods=["POST"])
+def buscar_hoteis(destino_id):
+    db = next(get_db())
+    service = HotelService(db)
+    destino = db.query(Destino).filter_by(id=destino_id).first()
+    if not destino:
+        return {"error": "Destino não encontrado"}, 404
+
+    cidade = destino.destino  
+    check_in = destino.check_in
+    check_out = destino.check_out
+    adultos = destino.adultos
+    criancas = destino.criancas
+
+    resultados = service.buscar_hoteis(
+        cidade,
+        check_in,
+        check_out,
+        adultos,
+        criancas
+    )
+
+    return resultados, 200
+
+
 
 @hotel_bp.route("/hoteis", methods=["POST"])
 def criar_hotel():
@@ -11,7 +37,7 @@ def criar_hotel():
     service = HotelService(db)
     data = request.get_json()
 
-    hotel = Hotel(
+    hotel = Hotels(
         nome=data.get("nome"),
         localizacao=data.get("localizacao"),
         check_in=data.get("check_in"),

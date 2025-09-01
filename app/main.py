@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, app,Fl
 from controllers.UserController import user_bp
 from controllers.DestinoController import destio_bp
 from controllers.PessoaController import pessoa_bp
+from controllers.HotelsController import hotel_bp
 from dotenv import load_dotenv
 import os
 
@@ -11,6 +12,7 @@ app.secret_key = os.getenv('SECRET_KEY')
 app.register_blueprint(user_bp)
 app.register_blueprint(destio_bp)
 app.register_blueprint(pessoa_bp)
+app.register_blueprint(hotel_bp)
 
 @app.route('/', methods=['GET','POST'])
 def index():
