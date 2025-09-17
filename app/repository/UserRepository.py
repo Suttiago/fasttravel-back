@@ -13,6 +13,9 @@ class UserRepository:
     def listar_usuarios(self, usuario: Usuario):
         self.db.query(usuario).filter_by(usuario.id).first()
         
+    def listar_tudo(self):
+        return self.db.query(Usuario).all()
+        
     def editar_usuario(self, usuario:Usuario):
         usuario_db = self.db.query(Usuario).filter_by(id=usuario.id)
         if usuario_db:

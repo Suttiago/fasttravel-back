@@ -3,7 +3,7 @@ from repository.InfoHotelsRepository import HotelsRepository
 from dotenv import load_dotenv
 import json
 import os
-from serpapi import GoogleSearch
+from serpapi.google_search import GoogleSearch
 
 
 

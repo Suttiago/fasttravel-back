@@ -2,14 +2,16 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from services.DestinoService import DestinoService
 from database.db import get_db
 from models.Destino import Destino
+from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_cors import CORS, cross_origin
 
 destio_bp = Blueprint('destino',__name__)
+CORS(destio_bp)
 
 @destio_bp.route('/CadastroDestino', methods=['POST', 'GET'])
+@jwt_required()
+@cross_origin()
 def novo_destino():
-    if not session.get('usuario_id'):
-        flash('Você precisa estar logado para cadastrar um destino.')
-        return redirect(url_for('user.login'))
     if request.method == 'POST':
         db = next(get_db())
         service = DestinoService(db)
@@ -20,18 +22,15 @@ def novo_destino():
             check_out=data.get("data_saida"),
             adultos=data.get("adultos"),
             criancas=data.get("criancas"),
-            usuario_id=session.get('usuario_id')
+            usuario_id=get_jwt_identity()
         )
-        if destino.check_in > destino.check_out:
-            flash('Não se pode ter uma data de saída maior que a data de chegada')
-        else:
-            service.salvar_destino(destino)
+        destino_criado = service.criar_pessoa(destino)
+        return jsonify(destino_criado.to_dict()), 201
             
-        flash('Destino cadastrado com sucesso!')
-        return redirect(url_for('destino.listar_destinos')) 
-    return render_template('Destinos.html')
 
 @destio_bp.route('/MeusDestinos')
+@jwt_required()
+@cross_origin()
 def listar_destinos():
     usuario_id = session.get('usuario_id')
     if not usuario_id:
@@ -39,17 +38,24 @@ def listar_destinos():
     db = next(get_db())
     service = DestinoService(db)
     destinos = service.listar_destinos_por_usuario(usuario_id)
-    return render_template('Destinos.html', destinos=destinos)
+    lista_destinos = [d.to_dict() for d in destinos]
+    return jsonify(lista_destinos)
 
 @destio_bp.route('/ExcluirDestino/<int:destino_id>',methods=['POST'])
+@jwt_required()
+@cross_origin()
 def excluir_destinos(destino_id):
     db = next(get_db())
     service = DestinoService(db)
     service.excluir_destino(destino_id)
-    flash('Destino excluído com sucesso!')
-    return redirect(url_for('destino.listar_destinos'))
+    return jsonify({
+        "message": "Destino excluído com sucesso!",
+        "id": destino_id
+    }), 200
 
 @destio_bp.route('/EditarDestino/<int:destino_id>',methods=['POST'])
+@jwt_required()
+@cross_origin()
 def editar_destinos(destino_id):
     db = next(get_db())
     service = DestinoService(db)
@@ -63,7 +69,8 @@ def editar_destinos(destino_id):
         criancas=data.get('criancas'),
         status=data.get('status')
     )
-    
-    flash('Destino editado com sucesso!')
-    return redirect(url_for('destino.listar_destinos'))
+    return jsonify({
+        "message": "Destino editado com sucesso!",
+        "id": destino_id
+    }), 200
     

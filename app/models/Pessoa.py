@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Date, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from database.db import Base
-
+from datetime import date
 
 class Pessoa(Base):
     __tablename__ = 'PESSOAS'
@@ -37,3 +37,16 @@ class Pessoa(Base):
         'polymorphic_on': type
     }
 
+    def to_dict(self):
+        # Converte a data de nascimento para uma string no formato ISO
+        data_nascimento_iso = None
+        if isinstance(self.data_nascimento, date):
+            data_nascimento_iso = self.data_nascimento.isoformat()
+            
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "data_nascimento": data_nascimento_iso,
+            "cpf": self.cpf,
+            "sexo": self.sexo,
+        }
