@@ -73,3 +73,30 @@ def editar_destinos(destino_id):
         "id": destino_id
     }), 200
     
+@destio_bp.route('/AceitarDest/<int:destino_id>',methods=['PUT'])
+@jwt_required()
+@cross_origin()
+def aceitar_destino(destino_id):
+    db = next(get_db())
+    service = DestinoService(db)
+    service.editar_destinos(
+        status="Aceito"
+    )
+    return jsonify({
+        "message": "Destino Aceito",
+        "id": destino_id
+    }), 200
+    
+@destio_bp.route('/RecusarDest/<int:destino_id>',methods=['PUT'])
+@jwt_required()
+@cross_origin()
+def recusar_destino(destino_id):
+    db = next(get_db())
+    service = DestinoService(db)
+    service.editar_destinos(
+        status="Recusado"
+    )
+    return jsonify({
+        "message": "Destino Aceito",
+        "id": destino_id
+    }), 200

@@ -7,6 +7,7 @@ from controllers.PessoaController import pessoa_bp
 from controllers.HotelsController import hotel_bp
 from controllers.CidadeController import cidade_bp
 from controllers.PassagensController import passagem_bp
+from controllers.OrcamentoController import orcamento_bp
 from dotenv import load_dotenv
 import os
 
@@ -22,6 +23,8 @@ app.register_blueprint(pessoa_bp,url_prefix='/Dependentes')
 app.register_blueprint(cidade_bp, url_prefix='/Cidades')
 app.register_blueprint(hotel_bp)
 app.register_blueprint(passagem_bp)
+app.register_blueprint(orcamento_bp)
+
 
 
 if __name__ == '__main__':
