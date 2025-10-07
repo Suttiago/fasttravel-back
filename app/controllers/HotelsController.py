@@ -3,22 +3,27 @@ from services.InfoHotelsService import HotelService
 from models.InfoHotels import Hotels
 from database.db import get_db
 from models.Destino import Destino
-hotel_bp = Blueprint("hotel", __name__)
+from flask_cors import CORS,cross_origin
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
-@hotel_bp.route("/buscar_hoteis/<int:destino_id>", methods=["POST"])
+hotel_bp = Blueprint("hotel", __name__)
+CORS(hotel_bp)
+
+@hotel_bp.route("/BuscarHoteis/<int:destino_id>", methods=["POST"])
+@cross_origin()
+@jwt_required()
+
 def buscar_hoteis(destino_id):
     db = next(get_db())
     service = HotelService(db)
     destino = db.query(Destino).filter_by(id=destino_id).first()
     if not destino:
         return {"error": "Destino não encontrado"}, 404
-
     cidade = destino.destino  
     check_in = destino.check_in
     check_out = destino.check_out
     adultos = destino.adultos
     criancas = destino.criancas
-
     resultados = service.buscar_hoteis(
         cidade,
         check_in,
@@ -26,24 +31,23 @@ def buscar_hoteis(destino_id):
         adultos,
         criancas
     )
+    
+    return jsonify(resultados), 200
 
-    return resultados, 200
-
-
-
-@hotel_bp.route("/hoteis", methods=["POST"])
+@hotel_bp.route("/SalvarHoteis", methods=["POST"])
+@cross_origin()
+@jwt_required()
 def criar_hotel():
     db = next(get_db())
     service = HotelService(db)
     data = request.get_json()
 
     hotel = Hotels(
-        nome=data.get("nome"),
-        localizacao=data.get("localizacao"),
-        check_in=data.get("check_in"),
-        check_out=data.get("check_out"),
-        preco_diaria=data.get("preco_diaria"),
-        usuario_id=data.get("usuario_id")
+        hotel=data.get("hotel"),
+        hotel_classification = data.get("hotel_classification"),
+        hotel_description = data.get('hotel_description'),
+        hotel_price = data.get('hotel_price'),
+        destino_id = data.get('destino_id')
     )
 
     novo_hotel = service.salvar_hotel(hotel)
@@ -56,6 +60,16 @@ def listar_hoteis():
     service = HotelService(db)
     hoteis = service.listar_hoteis()
     return jsonify([h.to_dict() for h in hoteis]), 200
+
+@hotel_bp.route("/ListarHoteisPorDestino/<int:destino_id>", methods=['GET','OPTIONS'])
+@cross_origin()
+@jwt_required()
+def listar_por_destino(destino_id):
+    db = next(get_db())
+    service = HotelService(db)
+    hoteis = service.listar_hoteis_por_destino(destino_id)
+    return jsonify([h.to_dict() for h in hoteis]), 200
+    
 
 
 @hotel_bp.route("/hoteis/<int:hotel_id>", methods=["PUT"])

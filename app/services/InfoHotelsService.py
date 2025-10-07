@@ -5,11 +5,8 @@ import json
 import os
 from serpapi.google_search import GoogleSearch
 
-
-
 class HotelService:
     load_dotenv()
-    hotel_api_key = os.getenv("API_KEY_HOTELS")
     def __init__(self, db):
         self.db = db
         self.repo = HotelsRepository(db)
@@ -48,9 +45,9 @@ class HotelService:
               "currency": "BRL",
               "gl": "br",
               "hl": "pt-br",
-              "api_key": os.getenv("HOTEL_API_KEY")
+              "api_key": os.getenv("HOTEL_API_KEY")     
         }
 
         search = GoogleSearch(params)
         results = search.get_dict()
-        return (json.dumps(results, indent=2, ensure_ascii=False))  
+        return results  

@@ -7,5 +7,6 @@ from models.Pessoa import Pessoa
 from models.InfoFlights import Passagem
 from models.InfoHotels import Hotels
 from models.Destino import Destino
+from models.Cidades import Cidades
 
 Base.metadata.create_all(bind=engine)

@@ -8,40 +8,39 @@ from flask_cors import CORS, cross_origin
 destio_bp = Blueprint('destino',__name__)
 CORS(destio_bp)
 
-@destio_bp.route('/CadastroDestino', methods=['POST', 'GET'])
+@destio_bp.route('/Cadastro', methods=['POST', 'OPTIONS'])
 @jwt_required()
 @cross_origin()
 def novo_destino():
-    if request.method == 'POST':
         db = next(get_db())
         service = DestinoService(db)
-        data = request.form
+        data = request.get_json()
         destino = Destino(
             destino=data.get('destino'),
-            check_in=data.get("data_chegada"),
-            check_out=data.get("data_saida"),
+            check_in=data.get("check_in"),
+            check_out=data.get("check_out"),
             adultos=data.get("adultos"),
             criancas=data.get("criancas"),
-            usuario_id=get_jwt_identity()
+            status = "pendente",
+            usuario_id=get_jwt_identity(),
+            cidade_id = data.get("cidade_id")
         )
-        destino_criado = service.criar_pessoa(destino)
+        destino_criado = service.salvar_destino(destino)
         return jsonify(destino_criado.to_dict()), 201
             
 
-@destio_bp.route('/MeusDestinos')
+@destio_bp.route('/Listar', methods=['GET','POST','OPTIONS'])
 @jwt_required()
 @cross_origin()
 def listar_destinos():
-    usuario_id = session.get('usuario_id')
-    if not usuario_id:
-        return redirect(url_for('user.login'))
+    usuario_id = get_jwt_identity()
     db = next(get_db())
     service = DestinoService(db)
     destinos = service.listar_destinos_por_usuario(usuario_id)
     lista_destinos = [d.to_dict() for d in destinos]
     return jsonify(lista_destinos)
 
-@destio_bp.route('/ExcluirDestino/<int:destino_id>',methods=['POST'])
+@destio_bp.route('/Excluir/<int:destino_id>',methods=['DELETE'])
 @jwt_required()
 @cross_origin()
 def excluir_destinos(destino_id):
@@ -53,13 +52,13 @@ def excluir_destinos(destino_id):
         "id": destino_id
     }), 200
 
-@destio_bp.route('/EditarDestino/<int:destino_id>',methods=['POST'])
+@destio_bp.route('/Editar/<int:destino_id>',methods=['PUT'])
 @jwt_required()
 @cross_origin()
 def editar_destinos(destino_id):
     db = next(get_db())
     service = DestinoService(db)
-    data = request.form
+    data = request.get_json()
     service.editar_destinos(
         destino_id=destino_id,
         destino=data.get('destino'),

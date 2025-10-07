@@ -4,6 +4,7 @@ from sqlalchemy.orm import  relationship
 from models.InfoFlights import Passagem
 from models.InfoHotels import Hotels
 from models.Orcamento import Orcamento
+from models.Cidades import Cidades
 class Destino(Base):
     __tablename__ = 'DESTINOS'
     
@@ -15,11 +16,14 @@ class Destino(Base):
     criancas = Column(Integer, nullable=False)
     status = Column(String, nullable=True)    
     usuario_id = Column(Integer,ForeignKey('USUARIOS.id'),nullable=False)
+    cidade_id = Column(Integer,ForeignKey('CIDADES.id'), nullable=False)
     
     usuario = relationship("Usuario", back_populates="destinos")
     info_flights = relationship("Passagem", back_populates="destinos", cascade="all, delete-orphan")
     info_hotels = relationship("Hotels", back_populates="destinos", cascade="all, delete-orphan")
     orcamentos = relationship("Orcamento", back_populates="destinos", cascade="all, delete-orphan")
+    cidade = relationship("Cidades", back_populates="destinos")
+    
 
     def to_dict(self):
         return {
@@ -30,6 +34,7 @@ class Destino(Base):
             "adultos": self.adultos,
             "criancas": self.criancas,
             "status": getattr(self, "status", None),
-            "usuario_id": self.usuario_id
+            "usuario_id": self.usuario_id,
+            "cidade_id": self.cidade_id
         }
 

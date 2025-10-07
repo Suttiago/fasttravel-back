@@ -5,6 +5,8 @@ from controllers.UserController import user_bp
 from controllers.DestinoController import destio_bp
 from controllers.PessoaController import pessoa_bp
 from controllers.HotelsController import hotel_bp
+from controllers.CidadeController import cidade_bp
+from controllers.PassagensController import passagem_bp
 from dotenv import load_dotenv
 import os
 
@@ -14,13 +16,16 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}})
 jwt = JWTManager(app)
 
 app.secret_key = os.getenv('SECRET_KEY')
-app.register_blueprint(destio_bp)
+app.register_blueprint(destio_bp, url_prefix='/Destinos')
 app.register_blueprint(user_bp, url_prefix = '/Usuario')
 app.register_blueprint(pessoa_bp,url_prefix='/Dependentes')
+app.register_blueprint(cidade_bp, url_prefix='/Cidades')
 app.register_blueprint(hotel_bp)
+app.register_blueprint(passagem_bp)
+
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5001) 
 
 
 
