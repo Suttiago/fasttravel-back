@@ -25,6 +25,14 @@ class DestinoRepository:
             self.db.refresh(destino_db)
             return destino_db
         
+    def editar_status(self, destino:Destino):
+        destino_db = self.db.query(Destino).filter_by(id=destino.id)
+        if destino_db:
+            destino_db.status= destino.status
+            self.db.commit()
+            self.db.refresh(destino_db)
+            return destino_db
+        
     
     def excluir_destinos(self, destino_id):
         destino_db = self.db.query(Destino).filter_by(id=destino_id).first()

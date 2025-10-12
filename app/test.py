@@ -1,7 +1,6 @@
 from database.db import Base, engine
 from models.Usuario import Usuario
-from models.PlanoPagamento import PlanoPagamento
-from models.ContaReceber import ContaReceber
+from models.ContaPagar import ContaPagar
 from models.Orcamento import Orcamento
 from models.Pessoa import Pessoa
 from models.InfoFlights import Passagem

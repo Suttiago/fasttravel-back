@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
 from database.db import Base
 from sqlalchemy.orm import relationship
-from models.ContaReceber import ContaReceber
+from models.ContaPagar import ContaPagar
 class Orcamento(Base):
     __tablename__ = 'ORCAMENTOS'
 
@@ -14,7 +14,6 @@ class Orcamento(Base):
     destino_id = Column(Integer, ForeignKey('DESTINOS.id'))
     destinos = relationship("Destino", back_populates="orcamentos")
 
-    # Relacionamento com Contas a Receber
-    contas_receber = relationship("ContaReceber", back_populates="orcamentos", cascade="all, delete-orphan")
+    contas_receber = relationship("ContaPagar", back_populates="orcamentos", cascade="all, delete-orphan")
 
   
