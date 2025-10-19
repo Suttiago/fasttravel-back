@@ -14,7 +14,10 @@ class DestinoService:
     
     def listar_destinos_por_usuario(self, usuario_id):
         return self.db.query(Destino).filter_by(usuario_id=usuario_id).all()
-
+    
+    def listar_destino_por_id(self, destino_id):
+        return self.db.query(Destino).filter_by(id=destino_id).first()
+    
     def editar_destinos(self, destino_id, destino, check_in, check_out, adultos, criancas, status):
         destino_db = self.db.query(Destino).filter_by(id=destino_id).first()
         if destino_db:

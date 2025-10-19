@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, Float, String, ForeignKey, Date
 from database.db import Base
 from sqlalchemy.orm import relationship
 
-class ContaPagar(Base):
+class ContasPagar(Base):
     __tablename__ = 'CONTAS_PAGAR'
 
     id = Column(Integer, primary_key=True)
@@ -16,6 +16,8 @@ class ContaPagar(Base):
     orcamento_id = Column(Integer, ForeignKey('ORCAMENTOS.id'))
     orcamentos = relationship("Orcamento", back_populates="contas_receber")
     
+    plano_pagamento = relationship("PlanoPagamento", back_populates="contas_pagar", uselist=False, cascade="all, delete-orphan"
+)
     def to_dict(self):
         """Converte uma instância de Passagem em dicionário."""
         return {
@@ -26,4 +28,5 @@ class ContaPagar(Base):
             "instituicao_pagamento": self.instituicao_pagamento,
             "n_parcelas": self.n_parcelas,
             "status": self.status,
+            "orcamento_id": self.orcamento_id
         }

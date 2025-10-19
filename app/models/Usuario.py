@@ -11,7 +11,7 @@ class Usuario(Pessoa):
     senha = Column(String, nullable=False)
     
     destinos = relationship("Destino", back_populates="usuario")
-
+    orcamentos = relationship("Orcamento", back_populates="usuario", cascade="all, delete-orphan")
     __mapper_args__ = {
         'polymorphic_identity': 'usuario',
     }

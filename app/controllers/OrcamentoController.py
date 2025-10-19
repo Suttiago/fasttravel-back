@@ -42,18 +42,18 @@ def listar_orcamentos():
             'valor_hoteis': o.valor_hoteis,
             'valor_total': o.valor_total,
             'status': o.status,
-            'destino_id': o.destino_id
+            'destino_id': o.destino_id,
         }
     return jsonify([to_dict(o) for o in orcamentos]), 200
 
 
-@orcamento_bp.route('/ListarPorDestino/<int:destino_id>', methods=['GET'])
+@orcamento_bp.route('/ListarPorUser', methods=['GET'])
 @cross_origin()
 @jwt_required()
-def listar_por_destino(destino_id):
+def listar_por_destino():
     db = next(get_db())
     service = OrcamentoService(db)
-    orcamentos = service.listar_orcamento_dest(destino_id)
+    orcamentos = service.listar_orcamento_user(get_jwt_identity())
     def to_dict(o):
         return {
             'id': o.id,

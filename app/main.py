@@ -9,6 +9,8 @@ from controllers.CidadeController import cidade_bp
 from controllers.PassagensController import passagem_bp
 from controllers.OrcamentoController import orcamento_bp
 from controllers.ContasPagarController import pagar_bp
+from controllers.PlanoPagamentoController import plano_bp
+from controllers.RelatorioController import relatorio_bp
 from dotenv import load_dotenv
 import os
 
@@ -26,10 +28,13 @@ app.register_blueprint(hotel_bp)
 app.register_blueprint(passagem_bp)
 app.register_blueprint(orcamento_bp, url_prefix='/Orcamento')
 app.register_blueprint(pagar_bp, url_prefix ='/Contas')
+app.register_blueprint(plano_bp, url_prefix ='/Plano')
+app.register_blueprint(relatorio_bp, url_prefix ='/Relatorio')
+app
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001) 
+    app.run(debug=True, port=5001)  
 
 
 
